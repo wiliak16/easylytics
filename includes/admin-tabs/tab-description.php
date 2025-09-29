@@ -1,6 +1,8 @@
 <?php
 /**
- * EasyLytics Admin - Appearance Tab
+ * EasyLytics Admin - Description Tab
+ * 
+ * Displays README.md content in the admin interface
  * 
  * @package EasyLytics
  * @version 1.4.0
@@ -10,38 +12,36 @@
 if (!defined('ABSPATH')) {
     exit;
 }
+
+$readme_file = EASYLYTICS_PLUGIN_PATH . 'README.md';
+
+if (!file_exists($readme_file)) {
+    echo '<div class="notice notice-error"><p>' . 
+         __('README.md file not found in plugin directory.', 'easylytics') . 
+         '</p></div>';
+    return;
+}
+
+$readme_content = file_get_contents($readme_file);
+
+if (empty($readme_content)) {
+    echo '<div class="notice notice-warning"><p>' . 
+         __('README.md file is empty or could not be read.', 'easylytics') . 
+         '</p></div>';
+    return;
+}
 ?>
 
-<h2><?php _e('Plugin Description & Documentation', 'easylytics'); ?></h2>
-
-<div id="readme-content" style="max-width: none;">
-    <?php
-    $readme_file = EASYLYTICS_PLUGIN_PATH . 'README.html';
+<div class="easylytics-readme-content" style="max-width: none;">
+    <div style="">
+<?php echo esc_html($readme_content); ?>
+    </div>
     
-    if (file_exists($readme_file)) {
-        $readme_content = file_get_contents($readme_file);
-        
-        if (!empty($readme_content)) {
-            // Extract body content
-            if (preg_match('/<body[^>]*>(.*?)<\/body>/s', $readme_content, $matches)) {
-                $body_content = $matches[1];
-            } else {
-                $body_content = $readme_content;
-            }
-            
-            // Remove style tags
-            $body_content = preg_replace('/<style[^>]*>.*?<\/style>/s', '', $body_content);
-            
-            echo '<div class="easylytics-readme-content">' . $body_content . '</div>';
-        } else {
-            echo '<div class="notice notice-warning"><p>' . 
-                 __('README.html file is empty or could not be read.', 'easylytics') . 
-                 '</p></div>';
-        }
-    } else {
-        echo '<div class="notice notice-error"><p>' . 
-             __('README.html file not found in plugin directory.', 'easylytics') . 
-             '</p></div>';
-    }
-    ?>
+    <div style="margin-top: 20px; padding: 15px; background: #e7f3ff; border-left: 4px solid #2271b1; border-radius: 3px;">
+        <p style="margin: 0;">
+            <strong><?php _e('Note:', 'easylytics'); ?></strong> 
+            <?php _e('This is the raw README.md file. For better formatting, view it on', 'easylytics'); ?> 
+            <a href="https://github.com/wiliak16/easylytics" target="_blank">GitHub</a>.
+        </p>
+    </div>
 </div>
