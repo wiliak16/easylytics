@@ -16,6 +16,8 @@
         <h3>📋 Table of Contents</h3>
         <ul>
             <li><a href="#key-features">Key Features</a></li>
+            <li><a href="#file-structure">File Structure</a></li>
+            <li><a href="#architecture">Architecture</a></li>
             <li><a href="#quick-setup">Quick Setup</a></li>
             <li><a href="#admin-interface">Admin Interface</a></li>
             <li><a href="#cookie-behavior">Cookie Behavior</a></li>
@@ -84,22 +86,139 @@
 
     <div class="file-tree">
 easylytics/
-├── easylytics.php                 # Main plugin file
-├── uninstall.php                  # Clean uninstall script
-├── README.md                      # Documentation
-├── README.html                    # Documentation in html format
-├── assets/
+├── easylytics.php                          # Main bootstrap file
+├── uninstall.php                           # Clean uninstall script
+├── README.md                               # Documentation (Markdown)
+├── README.html                             # Documentation (HTML)
+│
+├── includes/                               # Plugin core classes
+│   ├── class-easylytics-core.php          # Core orchestration class
+│   ├── class-easylytics-admin.php         # Admin interface & settings
+│   ├── class-easylytics-assets.php        # Scripts & styles management
+│   ├── class-easylytics-frontend.php      # Frontend popup display
+│   ├── class-easylytics-youtube.php       # YouTube blocking functionality
+│   ├── admin-page-template.php            # Admin page HTML template
+│   │
+│   └── admin-tabs/                        # Admin interface tabs
+│       ├── tab-general.php                # General settings
+│       ├── tab-content.php                # Content customization
+│       ├── tab-appearance.php             # Color & styling options
+│       ├── tab-tools.php                  # Tools & utilities
+│       └── tab-description.php            # Documentation display
+│
+├── assets/                                 # Frontend & admin assets
 │   ├── css/
-│   │   ├── easylytics.css         # Frontend styles
-│   │   └── easylytics-admin.css   # Admin interface styles
+│   │   ├── easylytics.css                 # Frontend styles
+│   │   └── easylytics-admin.css           # Admin interface styles
+│   │
 │   └── js/
-│       ├── easylytics.js          # Frontend functionality
-│       └── easylytics-admin.js    # Admin interface scripts
-└── languages/
-    ├── easylytics.pot             # Translation template
-    ├── easylytics-en_US.po/.mo    # English translation
-    └── easylytics-sk_SK.po/.mo    # Slovak translation
+│       ├── easylytics.js                  # Frontend functionality
+│       └── easylytics-admin.js            # Admin interface scripts
+│
+└── languages/                              # Translation files
+    ├── easylytics.pot                     # Translation template
+    ├── easylytics-en_US.po/.mo            # English translation
+    └── easylytics-sk_SK.po/.mo            # Slovak translation
     </div>
+
+    <h1 id="architecture">🏗️ Architecture</h1>
+
+    <div class="highlight-box">
+        <h3>Modular Design (v1.4.0)</h3>
+        <p>The plugin follows a modern, modular architecture with separated concerns for better maintainability, scalability, and code organization.</p>
+    </div>
+
+    <h2>Core Classes</h2>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3><span class="icon">🎯</span> EasyLytics_Core</h3>
+            <p><strong>Main orchestrator</strong></p>
+            <ul>
+                <li>Initializes all plugin components</li>
+                <li>Registers WordPress hooks</li>
+                <li>Manages plugin lifecycle</li>
+                <li>Provides default settings</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <h3><span class="icon">⚙️</span> EasyLytics_Admin</h3>
+            <p><strong>Admin interface</strong></p>
+            <ul>
+                <li>Settings page rendering</li>
+                <li>AJAX request handling</li>
+                <li>Conflict scanner</li>
+                <li>Settings save/reset logic</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <h3><span class="icon">📦</span> EasyLytics_Assets</h3>
+            <p><strong>Asset management</strong></p>
+            <ul>
+                <li>Frontend script/style enqueuing</li>
+                <li>Admin script/style enqueuing</li>
+                <li>Dynamic CSS generation</li>
+                <li>File versioning</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <h3><span class="icon">🎭</span> EasyLytics_Frontend</h3>
+            <p><strong>Frontend display</strong></p>
+            <ul>
+                <li>Cookie popup rendering</li>
+                <li>Shortcode handling</li>
+                <li>User consent interface</li>
+                <li>Success messaging</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <h3><span class="icon">🎬</span> EasyLytics_YouTube</h3>
+            <p><strong>YouTube blocking</strong></p>
+            <ul>
+                <li>Content filtering</li>
+                <li>Bot detection for SEO</li>
+                <li>Video placeholder creation</li>
+                <li>Consent verification</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Benefits of Modular Structure</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Benefit</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>✅ Maintainability</strong></td>
+                <td>Each class has a single responsibility - easier to locate and fix bugs</td>
+            </tr>
+            <tr>
+                <td><strong>✅ Scalability</strong></td>
+                <td>Easy to add new features without modifying core - extend classes independently</td>
+            </tr>
+            <tr>
+                <td><strong>✅ Testability</strong></td>
+                <td>Components can be tested independently - unit testing becomes feasible</td>
+            </tr>
+            <tr>
+                <td><strong>✅ Performance</strong></td>
+                <td>Autoloader only loads needed classes - no duplicate code</td>
+            </tr>
+            <tr>
+                <td><strong>✅ Code Organization</strong></td>
+                <td>Logical separation makes debugging easier - clear file structure</td>
+            </tr>
+        </tbody>
+    </table>
 
     <h1 id="quick-setup">🚀 Quick Setup</h1>
 
@@ -151,6 +270,11 @@ easylytics/
     <ul>
         <li><strong>Conflict Scanner</strong>: Detect other Google Analytics implementations</li>
         <li><strong>Export/Import</strong>: Backup and restore plugin settings</li>
+    </ul>
+
+    <h2>📖 Description Tab</h2>
+    <ul>
+        <li><strong>Built-in Documentation</strong>: Complete plugin information and usage guide</li>
     </ul>
 
 <h1 id="default-colors">🎨 Default Color Scheme</h1>
@@ -346,6 +470,14 @@ easylytics/
                 <td>✅ Enabled</td>
                 <td>✅ Enabled*</td>
                 <td>✅ Yes</td>
+                <td>✅ Hidden permanently</td>
+            </tr>
+            <tr>
+                <td><strong>Reject All</strong></td>
+                <td>✅ Enabled</td>
+                <td>❌ Disabled</td>
+                <td>❌ Disabled</td>
+                <td>❌ No</td>
                 <td>✅ Hidden permanently</td>
             </tr>
             <tr>
@@ -614,7 +746,7 @@ add_filter('easylytics_default_colors', function($colors) {
 
     <h2>Debug Commands</h2>
     <div class="api-example">
-// Full debug information
+        <pre><code>// Full debug information
 EasyLyticsAPI.debug();
 
 // Check popup state
@@ -627,7 +759,7 @@ EasyLyticsAPI.getYouTubePreference();
 EasyLyticsAPI.checkAndLoadGA4();
 
 // Rebind all events
-EasyLyticsAPI.rebindEvents();
+EasyLyticsAPI.rebindEvents();</code></pre>
     </div>
 
     <h1 id="requirements">📋 Requirements</h1>
@@ -695,25 +827,58 @@ EasyLyticsAPI.rebindEvents();
         <li><strong>Input Sanitization:</strong> All user inputs properly sanitized</li>
         <li><strong>XSS Prevention:</strong> Safe HTML rendering with wp_kses</li>
         <li><strong>CSRF Protection:</strong> WordPress nonce system implementation</li>
+        <li><strong>Direct Access Prevention:</strong> All PHP files check for ABSPATH</li>
+        <li><strong>Prefixed Classes:</strong> All CSS/JS classes use <code>eslt-</code> prefix to avoid conflicts</li>
     </ul>
 
     <h1 id="changelog">📝 Changelog</h1>
 
+    <h2>Version 1.4.0 (Current)</h2>
+    <ul>
+        <li>✨ <strong>Refactored to modular architecture</strong> - Separated into logical class components</li>
+        <li>✨ Added YouTube video blocking feature</li>
+        <li>✨ Added customizable YouTube blocking messages</li>
+        <li>✨ Added bot detection for SEO optimization</li>
+        <li>✨ Improved JavaScript logic for conditional feature handling</li>
+        <li>✨ Enhanced admin interface with YouTube options</li>
+        <li>✨ Added <code>.eslt-</code> prefix to all notice classes to avoid WordPress conflicts</li>
+        <li>🐛 Fixed CSS class conflicts with WordPress core</li>
+        <li>🐛 Fixed button layout issues in cookie popup</li>
+        <li>📝 Updated translations for YouTube features</li>
+        <li>⚡ Performance improvements and code optimization</li>
+    </ul>
+
+    <h2>Version 1.3.0</h2>
+    <ul>
+        <li>Added tertiary button (Reject All)</li>
+        <li>Enhanced color customization</li>
+        <li>Improved accessibility features</li>
+    </ul>
+
     <h2>Version 1.2.0</h2>
     <ul>
-        <li>Added YouTube video blocking feature</li>
-        <li>Added customizable YouTube blocking messages</li>
-        <li>Improved JavaScript logic for conditional feature handling</li>
-        <li>Enhanced admin interface with YouTube options</li>
-        <li>Updated translations for YouTube features</li>
-        <li>Bug fixes and performance improvements</li>
+        <li>Added multilingual support</li>
+        <li>Improved mobile responsiveness</li>
+        <li>Added shortcode support</li>
+    </ul>
+
+    <h2>Version 1.1.0</h2>
+    <ul>
+        <li>Initial public release</li>
+        <li>GDPR compliance features</li>
+        <li>GA4 integration</li>
     </ul>
 
     <div class="footer">
         <h3>📄 License</h3>
         <p>This plugin is licensed under the GPL v2 or later.</p>
         <br>
+        <h3>👨‍💻 Author</h3>
+        <p><strong>wiliak.sk</strong><br>
+        Website: <a href="https://wiliak.sk">https://wiliak.sk</a></p>
+        <br>
         <p><strong>EasyLytics - Simple, compliant, effective cookie consent management for WordPress.</strong></p>
+        <p>Made with ❤️ for the WordPress community.</p>
     </div>
 </body>
 </html>
