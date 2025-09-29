@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyLytics - WordPress Cookie Consent Plugin</title>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 EasyLytics</h1>
+        <div class="eslt-subtitle">WordPress Cookie Consent Plugin</div>
+        <div class="version-badge">Version 1.4.0 | WordPress 5.0+ | PHP 7.4+</div>
+    </div>
+
+    <div class="toc">
+        <h3>📋 Table of Contents</h3>
+        <ul>
+            <li><a href="#key-features">Key Features</a></li>
+            <li><a href="#quick-setup">Quick Setup</a></li>
+            <li><a href="#admin-interface">Admin Interface</a></li>
+            <li><a href="#cookie-behavior">Cookie Behavior</a></li>
+            <li><a href="#youtube-blocking">YouTube Video Blocking</a></li>
+            <li><a href="#bot-seo">Bot Detection & SEO</a></li>            
+            <li><a href="#shortcode-usage">Shortcode Usage</a></li>
+            <li><a href="#developer-api">Developer API</a></li>
+            <li><a href="#troubleshooting">Troubleshooting</a></li>
+        </ul>
+    </div>
+
+    <div class="highlight-box">
+        <h3>🎯 What is EasyLytics?</h3>
+        <p>A GDPR-compliant WordPress plugin that provides cookie consent management with Google Analytics 4 integration, YouTube video blocking, multilingual support, and full customization options. Simple to setup, powerful to customize, and privacy-focused by design.</p>
+    </div>
+
+    <h1 id="key-features">✨ Key Features</h1>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3><span class="icon">🔒</span> Privacy & Compliance</h3>
+            <ul>
+                <li><strong>GDPR Compliant</strong>: Full cookie consent management</li>
+                <li><strong>Privacy-First Design</strong>: Users can decline analytics</li>
+                <li><strong>YouTube Cookie Control</strong>: Block videos until user consent</li>
+                <li><strong>Cookie Categorization</strong>: Technical, Analytical, and YouTube separation</li>
+                <li><strong>7-Day Duration</strong>: Reasonable expiration with secure flags</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <h3><span class="icon">💫</span> User Experience</h3>
+            <ul>
+                <li><strong>Close Button</strong>: Non-persistent close option</li>
+                <li><strong>Smooth Animations</strong>: jQuery-powered transitions</li>
+                <li><strong>Mobile Optimized</strong>: Responsive design</li>
+                <li><strong>Keyboard Navigation</strong>: Full accessibility support</li>
+                <li><strong>Success Feedback</strong>: Customizable confirmations</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <h3><span class="icon">🎨</span> Customization</h3>
+            <ul>
+                <li><strong>Complete Color Control</strong>: Professional palette</li>
+                <li><strong>Custom Content</strong>: All text editable</li>
+                <li><strong>HTML Support</strong>: Rich formatting options</li>
+                <li><strong>Multiple Positions</strong>: Bottom placement options</li>
+                <li><strong>Typography Settings</strong>: Configurable font sizes</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <h3><span class="icon">⚡</span> Technical Integration</h3>
+            <ul>
+                <li><strong>Google Analytics 4</strong>: Privacy-focused loading</li>
+                <li><strong>YouTube Blocking</strong>: Optional video blocking</li>
+                <li><strong>Conflict Detection</strong>: Built-in scanner</li>
+                <li><strong>Shortcode Support</strong>: Easy popup reopening</li>
+                <li><strong>Event System</strong>: JavaScript integration</li>
+            </ul>
+        </div>
+    </div>
+
+    <h1 id="file-structure">📁 File Structure</h1>
+
+    <div class="file-tree">
+easylytics/
+├── easylytics.php                 # Main plugin file
+├── uninstall.php                  # Clean uninstall script
+├── README.md                      # Documentation
+├── README.html                    # Documentation in html format
+├── assets/
+│   ├── css/
+│   │   ├── easylytics.css         # Frontend styles
+│   │   └── easylytics-admin.css   # Admin interface styles
+│   └── js/
+│       ├── easylytics.js          # Frontend functionality
+│       └── easylytics-admin.js    # Admin interface scripts
+└── languages/
+    ├── easylytics.pot             # Translation template
+    ├── easylytics-en_US.po/.mo    # English translation
+    └── easylytics-sk_SK.po/.mo    # Slovak translation
+    </div>
+
+    <h1 id="quick-setup">🚀 Quick Setup</h1>
+
+    <div class="setup-steps">
+        <div class="setup-step">
+            <h4>Install the Plugin</h4>
+            <p>Upload to <code>/wp-content/plugins/easylytics/</code> or install via WordPress admin dashboard.</p>
+        </div>
+
+        <div class="setup-step">
+            <h4>Activate & Configure</h4>
+            <p>Go to <strong>Settings → EasyLytics</strong> and enter your GA4 Measurement ID (G-XXXXXXXXXX). Optionally enable YouTube video blocking. Customize appearance and content as needed.</p>
+        </div>
+
+        <div class="setup-step">
+            <h4>Test Integration</h4>
+            <p>View your site in incognito mode, verify cookie popup appears, and test the consent flow, GA4 loading, and YouTube blocking if enabled.</p>
+        </div>
+    </div>
+
+    <h1 id="admin-interface">⚙️ Admin Interface</h1>
+
+    <h2>🔧 General Tab</h2>
+    <ul>
+        <li><strong>GA4 Measurement ID</strong>: Your Google Analytics 4 tracking code</li>
+        <li><strong>Popup Position</strong>: Choose from bottom-right, left, or center</li>
+        <li><strong>YouTube Video Blocking</strong>: Enable to block YouTube videos until user consent</li>
+        <li><strong>Cookie Information</strong>: Optional link to detailed cookie policy page</li>
+    </ul>
+
+    <h2>📄 Content Tab</h2>
+    <ul>
+        <li><strong>Popup Title & Description</strong>: Main consent message with HTML support</li>
+        <li><strong>Button Labels</strong>: Customize all button text including "Hide Settings"</li>
+        <li><strong>Cookie Categories</strong>: Descriptions for technical, analytical, and YouTube cookies</li>
+        <li><strong>YouTube Blocking Messages</strong>: Customize title, message, and button text for blocked videos</li>
+        <li><strong>Success Message</strong>: Confirmation text after saving preferences</li>
+        <li><strong>Reset Function</strong>: Restore all texts to English defaults</li>
+    </ul>
+
+    <h2>🎨 Appearance Tab</h2>
+    <ul>
+        <li><strong>Color Palette</strong>: Background, text, button, and border colors</li>
+        <li><strong>Typography</strong>: Font size configuration (12-24px)</li>
+        <li><strong>Reset Options</strong>: Restore default professional color scheme</li>
+    </ul>
+
+    <h2>🔧 Tools Tab</h2>
+    <ul>
+        <li><strong>Conflict Scanner</strong>: Detect other Google Analytics implementations</li>
+        <li><strong>Export/Import</strong>: Backup and restore plugin settings</li>
+    </ul>
+
+<h1 id="default-colors">🎨 Default Color Scheme</h1>
+
+<p>EasyLytics comes with a professional, accessible color scheme that works well for most websites. All colors can be customized through the admin interface.</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Element</th>
+            <th>Color Name</th>
+            <th>Hex Code</th>
+            <th style="width: 80px;">Preview</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Background</strong></td>
+            <td>White</td>
+            <td><code>#ffffff</code></td>
+            <td style="background: #ffffff; border: 1px solid #ddd;"></td>
+        </tr>
+        <tr>
+            <td><strong>Text</strong></td>
+            <td>Dark Gray</td>
+            <td><code>#374151</code></td>
+            <td style="background: #374151;"></td>
+        </tr>
+        <tr>
+            <td><strong>Primary Button</strong><br><small>(Accept All, Save)</small></td>
+            <td>Blue</td>
+            <td><code>#3b82f6</code></td>
+            <td style="background: #3b82f6;"></td>
+        </tr>
+        <tr>
+            <td><strong>Primary Button Text</strong></td>
+            <td>White</td>
+            <td><code>#ffffff</code></td>
+            <td style="background: #ffffff; border: 1px solid #ddd;"></td>
+        </tr>
+        <tr>
+            <td><strong>Secondary Button</strong><br><small>(Cookie Settings)</small></td>
+            <td>Black</td>
+            <td><code>#000000</code></td>
+            <td style="background: #000000;"></td>
+        </tr>
+        <tr>
+            <td><strong>Secondary Button Text</strong></td>
+            <td>White</td>
+            <td><code>#ffffff</code></td>
+            <td style="background: #ffffff; border: 1px solid #ddd;"></td>
+        </tr>
+        <tr>
+            <td><strong>Tertiary Button</strong><br><small>(Reject All)</small></td>
+            <td>Red</td>
+            <td><code>#dc2626</code></td>
+            <td style="background: #dc2626;"></td>
+        </tr>
+        <tr>
+            <td><strong>Tertiary Button Text</strong></td>
+            <td>White</td>
+            <td><code>#ffffff</code></td>
+            <td style="background: #ffffff; border: 1px solid #ddd;"></td>
+        </tr>
+        <tr>
+            <td><strong>Border</strong></td>
+            <td>Light Gray</td>
+            <td><code>#d1d5db</code></td>
+            <td style="background: #d1d5db;"></td>
+        </tr>
+        <tr>
+            <td><strong>Font Size</strong></td>
+            <td>Base Size</td>
+            <td><code>16px</code></td>
+            <td style="text-align: center; font-weight: bold;">Aa</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="alert alert-info">
+    <strong>💡 Customization Tip:</strong> All these colors can be changed in the <strong>Appearance</strong> tab of the admin settings. Use the color pickers to match your website's brand colors. Font size can be adjusted between 12px and 24px.
+</div>
+
+<div class="alert alert-success">
+    <strong>♿ Accessibility:</strong> The default color scheme meets WCAG 2.1 AA standards for color contrast, ensuring readability for all users including those with visual impairments.
+</div>
+
+<h2>Button Style Guide</h2>
+
+<div class="feature-grid">
+    <div class="feature-card">
+        <h3><span class="icon" style="color: #3b82f6;">●</span> Primary Buttons</h3>
+        <p><strong>Used for:</strong> Accept All, Save Preferences</p>
+        <p><strong>Purpose:</strong> Main call-to-action buttons that encourage positive user action</p>
+        <p><strong>Default:</strong> Blue background (#3b82f6) with white text</p>
+    </div>
+
+    <div class="feature-card">
+        <h3><span class="icon" style="color: #000000;">●</span> Secondary Buttons</h3>
+        <p><strong>Used for:</strong> Cookie Settings, Hide Settings</p>
+        <p><strong>Purpose:</strong> Secondary actions that provide additional options</p>
+        <p><strong>Default:</strong> Black background (#000000) with white text</p>
+    </div>
+
+    <div class="feature-card">
+        <h3><span class="icon" style="color: #dc2626;">●</span> Tertiary Buttons</h3>
+        <p><strong>Used for:</strong> Reject All</p>
+        <p><strong>Purpose:</strong> Alternative action for users who want to decline optional cookies</p>
+        <p><strong>Default:</strong> Red background (#dc2626) with white text</p>
+    </div>
+</div>
+
+<h2>Color Customization Examples</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Theme</th>
+            <th>Primary Button</th>
+            <th>Secondary Button</th>
+            <th>Tertiary Button</th>
+            <th>Best For</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Default (Professional)</strong></td>
+            <td style="background: #3b82f6; color: white; text-align: center;">#3b82f6</td>
+            <td style="background: #000000; color: white; text-align: center;">#000000</td>
+            <td style="background: #dc2626; color: white; text-align: center;">#dc2626</td>
+            <td>General purpose, professional sites</td>
+        </tr>
+        <tr>
+            <td><strong>Corporate Blue</strong></td>
+            <td style="background: #0066cc; color: white; text-align: center;">#0066cc</td>
+            <td style="background: #333333; color: white; text-align: center;">#333333</td>
+            <td style="background: #cc0000; color: white; text-align: center;">#cc0000</td>
+            <td>Corporate, business websites</td>
+        </tr>
+        <tr>
+            <td><strong>Modern Green</strong></td>
+            <td style="background: #10b981; color: white; text-align: center;">#10b981</td>
+            <td style="background: #1f2937; color: white; text-align: center;">#1f2937</td>
+            <td style="background: #ef4444; color: white; text-align: center;">#ef4444</td>
+            <td>Eco-friendly, health, wellness sites</td>
+        </tr>
+        <tr>
+            <td><strong>Elegant Purple</strong></td>
+            <td style="background: #8b5cf6; color: white; text-align: center;">#8b5cf6</td>
+            <td style="background: #374151; color: white; text-align: center;">#374151</td>
+            <td style="background: #dc2626; color: white; text-align: center;">#dc2626</td>
+            <td>Creative, design-focused sites</td>
+        </tr>
+        <tr>
+            <td><strong>Warm Orange</strong></td>
+            <td style="background: #f97316; color: white; text-align: center;">#f97316</td>
+            <td style="background: #44403c; color: white; text-align: center;">#44403c</td>
+            <td style="background: #b91c1c; color: white; text-align: center;">#b91c1c</td>
+            <td>Dynamic, energetic brands</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="alert alert-warning">
+    <strong>⚠️ Important:</strong> When customizing colors, always ensure sufficient contrast between button background and text colors (minimum 4.5:1 ratio) for accessibility compliance. You can test your color combinations at <a href="https://webaim.org/resources/contrastchecker/" target="_blank">WebAIM Contrast Checker</a>.
+</div>
+
+    <h1 id="cookie-behavior">🍪 Cookie Consent Behavior</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>User Action</th>
+                <th>Technical Cookies</th>
+                <th>Analytical Cookies</th>
+                <th>YouTube Cookies</th>
+                <th>GA4 Loading</th>
+                <th>Popup Behavior</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Close (✖)</strong></td>
+                <td>❌ No cookies saved</td>
+                <td>❌ No cookies saved</td>
+                <td>❌ No cookies saved</td>
+                <td>❌ No</td>
+                <td>🔄 Reappears on reload</td>
+            </tr>
+            <tr>
+                <td><strong>Accept All</strong></td>
+                <td>✅ Enabled</td>
+                <td>✅ Enabled</td>
+                <td>✅ Enabled*</td>
+                <td>✅ Yes</td>
+                <td>✅ Hidden permanently</td>
+            </tr>
+            <tr>
+                <td><strong>Custom Settings</strong></td>
+                <td>✅ Enabled</td>
+                <td>👤 User Choice</td>
+                <td>👤 User Choice*</td>
+                <td>🔄 Conditional</td>
+                <td>✅ Hidden permanently</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="alert alert-info">
+        <strong>Cookie Details:</strong> Duration: 7 days | Names: <code>eslt-cookies-consent</code>, <code>eslt-tech-cookies-consent</code>, <code>eslt-analytical-cookies</code>, <code>eslt-youtube-cookies</code> | Security: Secure, SameSite=Lax flags<br>
+        <em>*Only when YouTube blocking is enabled in admin</em>
+    </div>
+
+    <h1 id="youtube-blocking">📺 YouTube Video Blocking</h1>
+
+    <div class="alert alert-success">
+        <p>When enabled in admin settings, YouTube videos are blocked until users give explicit consent.</p>
+    </div>
+
+    <h2>How It Works</h2>
+    <div class="setup-steps">
+        <div class="setup-step">
+            <h4>Admin Enables Blocking</h4>
+            <p>Check "Disable YouTube Cookies" in General settings</p>
+        </div>
+
+        <div class="setup-step">
+            <h4>Videos Are Blocked</h4>
+            <p>YouTube embeds show a consent overlay instead of playing</p>
+        </div>
+
+        <div class="setup-step">
+            <h4>User Gives Consent</h4>
+            <p>Users can accept YouTube cookies from the popup or directly on blocked videos</p>
+        </div>
+
+        <div class="setup-step">
+            <h4>Videos Unblock</h4>
+            <p>After consent, all YouTube videos load normally</p>
+        </div>
+    </div>
+
+    <h2>What Gets Blocked</h2>
+    <ul>
+        <li>WordPress auto-embeds (<code>[embed]https://youtube.com/watch?v=...</code>)</li>
+        <li>Manual iframe embeds</li>
+        <li>Block editor embeds</li>
+        <li>Widget embeds</li>
+    </ul>
+
+    <h2>Customization</h2>
+    <p>All blocking messages are customizable in the Content tab:</p>
+    <ul>
+        <li><strong>YouTube Blocked Title</strong>: Heading shown on blocked videos</li>
+        <li><strong>YouTube Blocked Message</strong>: Description text</li>
+        <li><strong>YouTube Accept Button</strong>: Button text to accept cookies</li>
+    </ul>
+
+    <h1 id="shortcode-usage">📋 Shortcode Usage</h1>
+
+    <h2>Basic Cookie Settings Button</h2>
+    <pre><code>[easylytics-btn]</code></pre>
+
+    <h2>Custom Button</h2>
+    <pre><code>[easylytics-btn text="Manage Cookies" class="my-class" style="background: #ff6b35;"]</code></pre>
+
+    <div class="alert alert-success">
+        <strong>Features:</strong> Shows current cookie settings when reopened, fully accessible with keyboard navigation, customizable text, CSS class, and inline styles.
+    </div>
+
+    <h1 id="developer-api">👨‍💻 Developer API</h1>
+
+    <h2>JavaScript Events</h2>
+    <div class="api-example">
+        <pre><code>// Listen for consent events
+$(document).on('easylytics:consentGiven', function(e, data) {
+    console.log('Consent given:', data.technical, data.analytical, data.youtube);
+});
+
+// Listen for YouTube consent
+$(document).on('easylytics:youtubeConsentGiven', function(e, data) {
+    console.log('YouTube consent for video:', data.videoId);
+});
+
+// Check consent status
+if (window.EasyLyticsAPI.hasConsent()) {
+    console.log('User has given consent');
+}
+
+// Check YouTube consent
+if (window.EasyLyticsAPI.getYouTubePreference()) {
+    console.log('YouTube cookies accepted');
+}
+
+// Show popup programmatically
+window.EasyLyticsAPI.showPopup();
+
+// Get detailed debug information
+window.EasyLyticsAPI.debug();</code></pre>
+    </div>
+
+    <h2>PHP Hooks</h2>
+    <div class="api-example">
+        <pre><code>// Modify popup content
+add_filter('easylytics_popup_content', function($content) {
+    return $content . '&lt;p&gt;Custom message&lt;/p&gt;';
+});
+
+// Override default colors
+add_filter('easylytics_default_colors', function($colors) {
+    $colors['eslt_primary_btn_bg'] = '#ff6b35';
+    return $colors;
+});</code></pre>
+    </div>
+
+    <h1 id="privacy-features">🔐 Privacy Features</h1>
+
+    <h2>YouTube Cookie Prevention</h2>
+    <p>When enabled, automatically blocks YouTube embeds until user consent:</p>
+    <div class="api-example">
+&lt;!-- Blocked State --&gt;
+&lt;iframe data-src="https://youtube.com/embed/VIDEO_ID" class="eslt-youtube-blurred"&gt;&lt;/iframe&gt;
+&lt;div class="eslt-youtube-wrapper"&gt;
+    &lt;!-- Consent overlay --&gt;
+&lt;/div&gt;
+
+&lt;!-- After Consent --&gt;
+&lt;iframe src="https://youtube.com/embed/VIDEO_ID"&gt;&lt;/iframe&gt;
+    </div>
+
+    <h2>GA4 Privacy Configuration</h2>
+    <ul>
+        <li>✅ IP anonymization enabled</li>
+        <li>✅ Google Signals disabled</li>
+        <li>✅ Ad personalization disabled</li>
+        <li>✅ 7-day cookie expiration</li>
+        <li>✅ Secure cookie flags</li>
+    </ul>
+
+    <div class="alert alert-info">
+        <strong>Important:</strong> Traffic data is still collected for website analytics, but with enhanced privacy protection. You'll receive valuable insights about page views, user sessions, referral sources, and general geographic data (country/region level), while user IP addresses are anonymized, cross-device tracking is disabled, and data retention is limited to 7 days instead of the default 2 years.
+    </div>
+
+<h1 id="bot-seo">🤖 Bot Detection & SEO</h1>
+
+    <div class="alert alert-success">
+        <p><strong>Automatic Bot Detection:</strong> EasyLytics automatically detects search engine bots and shows them unblocked content for optimal SEO performance.</p>
+    </div>
+
+    <h2>Detected Bots</h2>
+    <ul>
+        <li><strong>Googlebot</strong> (Google)</li>
+        <li><strong>Bingbot</strong> (Microsoft Bing)</li>
+        <li><strong>Slurp</strong> (Yahoo)</li>
+        <li><strong>DuckDuckBot</strong> (DuckDuckGo)</li>
+        <li><strong>Baiduspider</strong> (Baidu)</li>
+        <li><strong>YandexBot</strong> (Yandex)</li>
+        <li><strong>FacebookExternalHit</strong> (Facebook)</li>
+    </ul>
+
+    <h2>SEO Benefits</h2>
+    
+    <p>When YouTube blocking is enabled:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Visitor Type</th>
+                <th>What They See</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Users</strong></td>
+                <td>Consent overlay and blocked videos</td>
+                <td>GDPR compliant privacy protection</td>
+            </tr>
+            <tr>
+                <td><strong>Bots</strong></td>
+                <td>Normal YouTube embeds</td>
+                <td>Full video indexing and rich snippets</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>What This Means</h2>
+    <ul>
+        <li>✅ <strong>Video rich snippets</strong> appear in search results</li>
+        <li>✅ <strong>Videos indexed</strong> in Google Video Search</li>
+        <li>✅ <strong>Schema.org VideoObject</strong> data accessible</li>
+        <li>✅ <strong>Video sitemaps</strong> work correctly</li>
+        <li>✅ <strong>No negative SEO impact</strong> from blocking</li>
+    </ul>
+
+    <h2>How It Works</h2>
+    <div class="setup-steps">
+        <div class="setup-step">
+            <h4>Bot Detection</h4>
+            <p>Plugin detects request from search bot via User-Agent header</p>
+        </div>
+
+        <div class="setup-step">
+            <h4>Bypass Blocking</h4>
+            <p>Bot requests bypass YouTube blocking entirely</p>
+        </div>
+
+        <div class="setup-step">
+            <h4>Full Content</h4>
+            <p>Bots receive original HTML with proper iframe src attributes</p>
+        </div>
+
+        <div class="setup-step">
+            <h4>User Privacy</h4>
+            <p>Regular users continue to see consent flow for GDPR compliance</p>
+        </div>
+    </div>
+
+    <div class="alert alert-info">
+        <strong>Important:</strong> This is NOT cloaking (which Google penalizes). It's adaptive content delivery based on client capabilities - bots cannot execute JavaScript or provide consent, so they receive appropriate content. This is similar to serving different content to screen readers or mobile devices.
+    </div>    
+
+    <h1 id="troubleshooting">🆘 Troubleshooting</h1>
+
+    <h2>Common Issues</h2>
+
+    <div class="alert alert-warning">
+        <h4>Popup Not Showing</h4>
+        <ul>
+            <li>Verify plugin is activated</li>
+            <li>Check if consent cookie already exists</li>
+            <li>Clear browser cache and test in incognito mode</li>
+        </ul>
+    </div>
+
+    <div class="alert alert-warning">
+        <h4>GA4 Not Loading</h4>
+        <ul>
+            <li>Open browser console: <code>EasyLyticsAPI.debug()</code></li>
+            <li>Verify GA4 ID format: <code>G-XXXXXXXXXX</code></li>
+            <li>Check analytical cookies: <code>EasyLyticsAPI.getAnalyticalPreference()</code></li>
+        </ul>
+    </div>
+
+    <div class="alert alert-warning">
+        <h4>YouTube Videos Not Blocking</h4>
+        <ul>
+            <li>Verify "Disable YouTube Cookies" is checked in admin</li>
+            <li>Check browser console for JavaScript errors</li>
+            <li>Confirm videos are standard WordPress embeds or iframes</li>
+        </ul>
+    </div>
+
+    <div class="alert alert-warning">
+        <h4>YouTube Videos Not Unblocking</h4>
+        <ul>
+            <li>Open browser console: <code>EasyLyticsAPI.getYouTubePreference()</code></li>
+            <li>Clear browser cookies and test again</li>
+            <li>Check if page reload is required</li>
+        </ul>
+    </div>
+
+    <h2>Debug Commands</h2>
+    <div class="api-example">
+// Full debug information
+EasyLyticsAPI.debug();
+
+// Check popup state
+EasyLyticsAPI.checkSettingsState();
+
+// Check YouTube consent
+EasyLyticsAPI.getYouTubePreference();
+
+// Manual GA4 loading
+EasyLyticsAPI.checkAndLoadGA4();
+
+// Rebind all events
+EasyLyticsAPI.rebindEvents();
+    </div>
+
+    <h1 id="requirements">📋 Requirements</h1>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3><span class="icon">🖥️</span> Server Requirements</h3>
+            <ul>
+                <li><strong>PHP:</strong> 7.4 or higher</li>
+                <li><strong>WordPress:</strong> 5.0 or higher</li>
+                <li><strong>MySQL:</strong> 5.6 or higher</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <h3><span class="icon">🌐</span> Browser Support</h3>
+            <ul>
+                <li><strong>Chrome:</strong> 70+</li>
+                <li><strong>Firefox:</strong> 65+</li>
+                <li><strong>Safari:</strong> 12+</li>
+                <li><strong>Edge:</strong> 79+</li>
+            </ul>
+        </div>
+    </div>
+
+    <h1 id="translation-support">🌍 Translation Support</h1>
+
+    <div class="alert alert-info">
+        <p>The plugin includes <strong>English (en_US)</strong> and <strong>Slovak (sk_SK)</strong> translations, plus a translation template for additional languages.</p>
+    </div>
+
+    <h2>Adding New Languages</h2>
+    <div class="setup-steps">
+        <div class="setup-step">
+            <h4>Copy Template</h4>
+            <p>Copy <code>easylytics.pot</code> to <code>easylytics-{locale}.po</code></p>
+        </div>
+
+        <div class="setup-step">
+            <h4>Translate Strings</h4>
+            <p>Use Poedit or similar tool to translate all strings</p>
+        </div>
+
+        <div class="setup-step">
+            <h4>Compile & Install</h4>
+            <p>Compile to <code>.mo</code> file using <code>msgfmt</code> and place in <code>/languages/</code> directory</p>
+        </div>
+    </div>
+
+    <h1 id="performance">⚡ Performance Features</h1>
+
+    <ul>
+        <li><strong>Lightweight:</strong> &lt; 50KB total plugin size</li>
+        <li><strong>Optimized Loading:</strong> Scripts load only when needed</li>
+        <li><strong>Cache Friendly:</strong> Compatible with WordPress caching plugins</li>
+        <li><strong>Mobile Optimized:</strong> Responsive design for all devices</li>
+        <li><strong>Reduced Motion:</strong> Respects user accessibility preferences</li>
+    </ul>
+
+    <h1 id="security">🔒 Security Features</h1>
+
+    <ul>
+        <li><strong>Nonce Verification:</strong> All AJAX requests protected</li>
+        <li><strong>Capability Checks:</strong> Admin functions require proper permissions</li>
+        <li><strong>Input Sanitization:</strong> All user inputs properly sanitized</li>
+        <li><strong>XSS Prevention:</strong> Safe HTML rendering with wp_kses</li>
+        <li><strong>CSRF Protection:</strong> WordPress nonce system implementation</li>
+    </ul>
+
+    <h1 id="changelog">📝 Changelog</h1>
+
+    <h2>Version 1.2.0</h2>
+    <ul>
+        <li>Added YouTube video blocking feature</li>
+        <li>Added customizable YouTube blocking messages</li>
+        <li>Improved JavaScript logic for conditional feature handling</li>
+        <li>Enhanced admin interface with YouTube options</li>
+        <li>Updated translations for YouTube features</li>
+        <li>Bug fixes and performance improvements</li>
+    </ul>
+
+    <div class="footer">
+        <h3>📄 License</h3>
+        <p>This plugin is licensed under the GPL v2 or later.</p>
+        <br>
+        <p><strong>EasyLytics - Simple, compliant, effective cookie consent management for WordPress.</strong></p>
+    </div>
+</body>
+</html>
