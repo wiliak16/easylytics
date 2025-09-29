@@ -32,16 +32,7 @@ if (empty($readme_content)) {
 }
 ?>
 
-<div class="easylytics-readme-content" style="max-width: none;">
-    <div style="">
-<?php echo esc_html($readme_content); ?>
-    </div>
-    
-    <div style="margin-top: 20px; padding: 15px; background: #e7f3ff; border-left: 4px solid #2271b1; border-radius: 3px;">
-        <p style="margin: 0;">
-            <strong><?php _e('Note:', 'easylytics'); ?></strong> 
-            <?php _e('This is the raw README.md file. For better formatting, view it on', 'easylytics'); ?> 
-            <a href="https://github.com/wiliak16/easylytics" target="_blank">GitHub</a>.
-        </p>
-    </div>
+<div id="readme-loading" style="text-align: center; padding: 40px;">
+    <p>Loading documentation...</p>
 </div>
+<div id="readme-content" class="eslt-readme-wrapper"><?php echo $readme_content; ?></div>

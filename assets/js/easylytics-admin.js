@@ -360,6 +360,32 @@
             reader.readAsText(file);
         });
         
+        /**
+         * Render README markdown to HTML using marked.js
+         */
+        if ($('#readme-content').length) {
+            try {
+                let markdown = $('#readme-content').text();
+                
+                if (!markdown || markdown.trim() === '') {
+                    throw new Error('README content is empty');
+                }
+                
+                if (typeof marked === 'undefined') {
+                    throw new Error('marked.js library not loaded');
+                }
+                
+                const html = marked.parse(markdown);
+                $('#readme-content').html(html);
+                $('#readme-loading').hide();
+                
+            } catch (error) {
+                console.error('Error rendering README:', error);
+                $('#readme-content').html('<p style="color: #dc2626;">Error rendering documentation: ' + error.message + '</p>');
+                $('#readme-loading').hide();
+            }
+        }
+        
     });
     
 })(jQuery);

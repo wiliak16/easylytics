@@ -96,6 +96,16 @@ class EasyLytics_Assets {
                 'reset_confirm' => __('Are you sure you want to reset all color settings to defaults?', 'easylytics')
             )
         ));
+
+        //enque mdd.js
+        // In enqueue_admin_scripts function, add:
+        wp_enqueue_script(
+            'marked-js',
+            'https://cdn.jsdelivr.net/npm/marked/marked.min.js',
+            array(),
+            '11.1.1',
+            true
+        );
     }
     
     /**

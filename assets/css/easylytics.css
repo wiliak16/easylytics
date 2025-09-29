@@ -147,6 +147,7 @@
     align-items: center;
     justify-content: center;
     min-height: 44px;
+    line-height: 1.2;
 }
 
 /* Primary button (Accept All, Save Preferences) */

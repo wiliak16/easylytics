@@ -93,8 +93,8 @@ class EasyLytics_Admin {
         }
         
         wp_send_json_success(__('Content settings reset to defaults successfully!', 'easylytics'));
-    }
-    
+    }  
+
     /**
      * Handle conflict scan AJAX request
      */
