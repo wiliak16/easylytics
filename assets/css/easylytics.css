@@ -1,6 +1,6 @@
 /**
  * EasyLytics Cookie Consent Styles
- * Version: 1.4.0
+ * Version: 1.4.1
  * Updated with close button, dynamic color system, toggle functionality, mobile improvements,
  * and smooth animation fixes
  */
@@ -105,8 +105,7 @@
 }
 
 .eslt-cookie-info-link {
-    /*margin: 12px 0 20px 0 !important;*/
-    padding: 12px 0 0 0;
+    padding: 20px 0 0 0;
     font-size: calc(var(--eslt-font-size) - 1px) !important;
 }
 
@@ -127,7 +126,7 @@
 .eslt-buttons {
     display: flex;
     gap: 8px;
-    margin-top: 10px;
+    padding-top: 25px;
     flex-wrap: wrap;
 }
 
@@ -148,6 +147,7 @@
     justify-content: center;
     min-height: 44px;
     line-height: 1.2;
+    margin: 0;
 }
 
 /* Primary button (Accept All, Save Preferences) */

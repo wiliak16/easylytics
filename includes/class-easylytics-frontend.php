@@ -116,7 +116,7 @@ class EasyLytics_Frontend {
                     </div>
                     <?php endif; ?>
                     
-                    <div class="eslt-buttons">
+                    <div class="eslt-buttons" style="padding-top: 0;">
                         <button class="eslt-save-btn" data-action="save-preferences">
                             <?php echo esc_html($save_preferences_btn); ?>
                         </button>
