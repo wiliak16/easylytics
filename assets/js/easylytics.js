@@ -528,12 +528,9 @@
                 script.onload = function() {
                     // Configure GA4 AFTER script loads - this will send automatic page_view
                     gtag('config', ga4Id, {
-                        'anonymize_ip': true,
-                        'allow_google_signals': false,
-                        'allow_ad_personalization_signals': false,
-                        'cookie_expires': 60 * 60 * 24 * 7, // 7 days
-                        'cookie_update': true,
-                        'cookie_flags': 'max-age=' + (60 * 60 * 24 * 7) + ';secure;samesite=lax'
+                        'cookie_expires': 60 * 60 * 24 * 7, // 7 days in seconds
+                        'cookie_update': false,
+                        'anonymize_ip': true // Anonymize IP addresses
                     });
                     
                     // Trigger our custom event to indicate GA4 is ready

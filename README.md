@@ -396,14 +396,8 @@ When YouTube blocking is enabled:
 When users accept analytical cookies, GA4 is loaded with privacy-enhanced settings:
 
 - ✅ IP anonymization enabled
-- ✅ Google Signals disabled
-- ✅ Ad personalization disabled
 - ✅ 7-day cookie expiration
-- ✅ Secure cookie flags
 
-> **Important**: Traffic data is still collected for website analytics, but with enhanced privacy protection. You'll receive valuable insights about page views, user sessions, referral sources, and general geographic data (country/region level), while user IP addresses are anonymized, cross-device tracking is disabled, and data retention is limited to 7 days instead of the default 2 years.
-
----
 
 ## 🌍 Translation & Localization
 
