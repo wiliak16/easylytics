@@ -41,6 +41,7 @@ class EasyLytics_Admin {
     public function register_settings() {
         // Basic settings
         register_setting('easylytics_settings', 'eslt_ga4_id');
+        register_setting('easylytics_settings', 'eslt_gtm_id');
         register_setting('easylytics_settings', 'eslt_popup_position');
         register_setting('easylytics_settings', 'eslt_disable_youtube_cookies');
         register_setting('easylytics_settings', 'eslt_cookies_info_url');
@@ -208,6 +209,7 @@ class EasyLytics_Admin {
         
         // Save general settings
         update_option('eslt_ga4_id', sanitize_text_field($_POST['eslt_ga4_id']));
+        update_option('eslt_gtm_id', sanitize_text_field($_POST['eslt_gtm_id']));
         update_option('eslt_popup_position', sanitize_text_field($_POST['eslt_popup_position']));
         update_option('eslt_disable_youtube_cookies', isset($_POST['eslt_disable_youtube_cookies']) ? '1' : '0');
         update_option('eslt_cookies_info_url', esc_url_raw($_POST['eslt_cookies_info_url']));
@@ -272,6 +274,7 @@ class EasyLytics_Admin {
         }
         
         $ga4_id = get_option('eslt_ga4_id', '');
+        $gtm_id = get_option('eslt_gtm_id', '');
         $popup_position = get_option('eslt_popup_position', 'bottom-right');
         $disable_youtube_cookies = get_option('eslt_disable_youtube_cookies', '0');
         $cookies_info_url = get_option('eslt_cookies_info_url', '');

@@ -3,7 +3,7 @@
  * Plugin Name: EasyLytics
  * Plugin URI: https://wiliak.sk
  * Description: GDPR-compliant cookie consent plugin with Google Analytics 4 integration and multilingual support.
- * Version: 1.4.0
+ * Version: 1.5.1
  * Author: wiliak.sk
  * Author URI: https://wiliak.sk
  * Text Domain: easylytics
@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('EASYLYTICS_VERSION', '1.4.0');
+define('EASYLYTICS_VERSION', '1.5.1');
 define('EASYLYTICS_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('EASYLYTICS_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('EASYLYTICS_PLUGIN_FILE', __FILE__);

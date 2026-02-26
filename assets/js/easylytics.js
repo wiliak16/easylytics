@@ -1,6 +1,6 @@
 /**
  * EasyLytics Cookie Consent JavaScript
- * Version: 1.4.0
+ * Version: 1.5.1
  * Updated with close button functionality, toggle settings, enhanced GA4 loading,
  * proper admin setting retrieval for hide button text, and cleaned debug logs
  */
@@ -125,8 +125,14 @@
             // Show success message first
             this.showSuccessMessage();
             
+            // Update Consent Mode v2 signals
+            this.setConsentMode(true);
+
             // Load GA4 immediately
             this.loadGA4();
+            
+            // Load GTM if configured
+            this.loadGTM();
             
             // Trigger consent event for other integrations
             this.triggerConsentEvent();
@@ -161,6 +167,9 @@
 
             // Show success message first
             this.showSuccessMessage();
+            
+            // Update Consent Mode v2 signals - denied
+            this.setConsentMode(false);
             
             // Do NOT load GA4 since analytical cookies were rejected
             
@@ -280,8 +289,12 @@
             // Show success message first
             this.showSuccessMessage();
             
+            // Update Consent Mode v2 signals
+            this.setConsentMode(analyticalConsent);
+
             if (analyticalConsent) {
                 this.loadGA4();
+                this.loadGTM();
                 this.triggerConsentEvent();
             }
             
@@ -498,8 +511,8 @@
             
             const ga4Id = easyLyticsAjax.ga4_id;
             
-            // Prevent multiple GA4 loads - check for both gtag function and our custom marker
-            if (window.gtag && (window.easyLyticsGA4Loaded || (window.dataLayer && window.dataLayer.length > 0))) {
+            // Prevent multiple GA4 loads
+            if (window.easyLyticsGA4Loaded) {
                 return true;
             }
             
@@ -552,6 +565,36 @@
                 console.error('EasyLytics: Error loading GA4:', error);
                 return false;
             }
+        },
+
+        /**
+         * Update Consent Mode v2 signals
+         * Maps analytical cookie consent to all 4 required Google consent signals
+         */
+        setConsentMode: function(granted) {
+            if (typeof window.gtag !== 'function') {
+                return;
+            }
+            const state = granted ? 'granted' : 'denied';
+            window.gtag('consent', 'update', {
+                'ad_storage': state,
+                'analytics_storage': state,
+                'ad_user_data': state,
+                'ad_personalization': state
+            });
+        },
+
+        /**
+         * Load Google Tag Manager (consent update must be called first)
+         */
+        loadGTM: function() {
+            if (typeof easyLyticsAjax === 'undefined' || !easyLyticsAjax.gtm_id) {
+                return false;
+            }
+
+            // GTM is loaded server-side via wp_head - nothing to do here
+            // We only need to ensure consent signals are updated (handled by setConsentMode)
+            return true;
         },
         
         /**
@@ -822,16 +865,23 @@
         // Only load GA4 if analytical cookies were explicitly accepted (not null/undefined)
         const analyticalCookie = this.getCookie('eslt-analytical-cookies');
         const hasExplicitConsent = analyticalCookie === 'true';
+        const hasExplicitDenial = analyticalCookie === 'false';
+
+        // Update Consent Mode v2 signals if user has already made a choice
+        if (hasExplicitConsent || hasExplicitDenial) {
+            this.setConsentMode(hasExplicitConsent);
+        }
         
         if (hasExplicitConsent && typeof easyLyticsAjax !== 'undefined' && easyLyticsAjax.ga4_id) {
             // Check if GA4 is already loaded to prevent duplicate loading
-            if (window.gtag && window.dataLayer && window.dataLayer.length > 0) {
+            if (window.easyLyticsGA4Loaded) {
                 return true; // Already loaded
             }
             
             // Wait a moment for DOM to be ready
             setTimeout(() => {
                 this.loadGA4();
+                this.loadGTM();
             }, 100);
             
             return true;
@@ -852,7 +902,9 @@
         // Check and load GA4 if analytical cookies were accepted in another tab
         if (EasyLytics.getCookie('eslt-analytical-cookies') === 'true' && typeof easyLyticsAjax !== 'undefined' && easyLyticsAjax.ga4_id) {
             if (!window.gtag || !window.dataLayer || !window.easyLyticsGA4Loaded) {
+                EasyLytics.setConsentMode(true);
                 EasyLytics.loadGA4();
+                EasyLytics.loadGTM();
             }
         }
     });

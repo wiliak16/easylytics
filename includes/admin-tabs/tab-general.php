@@ -31,6 +31,22 @@ if (!defined('ABSPATH')) {
     
     <tr>
         <th scope="row">
+            <label for="eslt_gtm_id"><?php _e('Google Tag Manager Container ID', 'easylytics'); ?></label>
+        </th>
+        <td>
+            <input type="text" id="eslt_gtm_id" name="eslt_gtm_id" 
+                   value="<?php echo esc_attr($gtm_id); ?>" 
+                   placeholder="GTM-XXXXXXX" class="regular-text" />
+            <p class="description">
+                <?php _e('Enter your GTM Container ID (starts with GTM-). Leave empty to disable.', 'easylytics'); ?>
+                <br>
+                <?php _e('Consent Mode v2 signals are automatically sent to GTM based on the user\'s analytical cookie choice.', 'easylytics'); ?>
+            </p>
+        </td>
+    </tr>
+    
+    <tr>
+        <th scope="row">
             <label for="eslt_popup_position"><?php _e('Popup Position', 'easylytics'); ?></label>
         </th>
         <td>

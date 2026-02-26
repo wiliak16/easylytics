@@ -79,6 +79,7 @@ class EasyLytics_Core {
         // Frontend hooks
         if (!is_admin()) {
             add_action('wp_footer', array($this->frontend, 'render_popup'));
+            add_action('wp_head', array($this, 'inject_consent_and_gtm'), 1);
         }
         
         // YouTube hooks
@@ -90,6 +91,50 @@ class EasyLytics_Core {
         add_shortcode('easylytics-btn', array($this->frontend, 'render_shortcode_button'));
     }
     
+    /**
+     * Inject Consent Mode v2 defaults and GTM snippet into <head>
+     * Must run before any Google tags fire (priority 1)
+     */
+    public function inject_consent_and_gtm() {
+        $ga4_id = get_option('eslt_ga4_id', '');
+        $gtm_id = get_option('eslt_gtm_id', '');
+
+        // Only inject if at least one tag is configured
+        if (empty($ga4_id) && empty($gtm_id)) {
+            return;
+        }
+
+        ?>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+
+            // Consent Mode v2 - deny all by default before user makes a choice
+            gtag('consent', 'default', {
+                'ad_storage': 'denied',
+                'analytics_storage': 'denied',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied',
+                'wait_for_update': 500
+            });
+        </script>
+        <?php
+
+        // Inject GTM snippet if configured
+        if (!empty($gtm_id)) {
+            $gtm_id_escaped = esc_js($gtm_id);
+            ?>
+            <script>
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','<?php echo $gtm_id_escaped; ?>');
+            </script>
+            <?php
+        }
+    }
+
     /**
      * Load plugin text domain for translations
      */

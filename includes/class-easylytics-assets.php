@@ -48,6 +48,7 @@ class EasyLytics_Assets {
             'ajaxurl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('easylytics_nonce'),
             'ga4_id' => get_option('eslt_ga4_id', ''),
+            'gtm_id' => get_option('eslt_gtm_id', ''),
             'cookie_settings_hide_btn' => get_option('eslt_cookie_settings_hide_btn', 'Hide Settings'),
             'youtube_blocking_enabled' => get_option('eslt_disable_youtube_cookies', '0') === '1'
         ));

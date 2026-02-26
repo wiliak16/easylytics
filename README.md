@@ -1,6 +1,6 @@
 # EasyLytics - WordPress Cookie Consent Plugin
 
-**Version:** 1.4.0  
+**Version:** 1.5.1  
 **WordPress Compatibility:** 5.0+  
 **PHP Version:** 7.4+  
 **License:** GPL v2 or later
@@ -34,6 +34,8 @@ A GDPR-compliant WordPress plugin that provides cookie consent management with G
 
 ### Integration
 - **Google Analytics 4**: Privacy-focused GA4 loading with consent-based activation
+- **Google Tag Manager**: Full GTM support with Consent Mode v2 compliance
+- **Consent Mode v2**: All four required Google consent signals automatically managed (`ad_storage`, `analytics_storage`, `ad_user_data`, `ad_personalization`)
 - **YouTube Video Blocking**: Blocks YouTube embeds until user consent (optional feature)
 - **Conflict Detection**: Built-in scanner for other analytics implementations
 - **Shortcode Support**: `[easylytics-btn]` for reopening consent popup
@@ -171,7 +173,8 @@ Then activate via WordPress admin.
 ### Admin Interface Tabs
 
 #### 1️⃣ General Settings
-- **GA4 Measurement ID**: Your Google Analytics 4 tracking code
+- **GA4 Measurement ID**: Your Google Analytics 4 tracking code (G-XXXXXXXXXX)
+- **GTM Container ID**: Your Google Tag Manager container ID (GTM-XXXXXXX) — optional
 - **Popup Position**: Choose from bottom-right, left, or center
 - **YouTube Video Blocking**: Enable to block YouTube videos until user consent
 - **Cookie Information**: Optional link to detailed cookie policy page
@@ -391,12 +394,29 @@ When YouTube blocking is enabled:
 
 ## 🔒 Privacy & Analytics
 
+### Google Tag Manager Integration
+
+When a GTM Container ID is configured, GTM is loaded in the `<head>` via a server-side injected snippet. Consent Mode v2 default signals are set **before** GTM fires, ensuring full compliance from the first page load.
+
+### Consent Mode v2
+
+EasyLytics implements Google's Consent Mode v2 specification. On every page load, all four required consent signals are set to `denied` by default before any Google tags fire:
+
+```
+ad_storage, analytics_storage, ad_user_data, ad_personalization
+```
+
+When the user accepts analytical cookies (or if consent was previously given), all four signals are updated to `granted`. When rejected, they remain `denied`. All signals map to the single **Analytical Cookies** category — no additional cookie categories are required.
+
+This applies to both GA4-only and GTM configurations.
+
 ### Google Analytics 4 Configuration
 
 When users accept analytical cookies, GA4 is loaded with privacy-enhanced settings:
 
 - ✅ IP anonymization enabled
 - ✅ 7-day cookie expiration
+- ✅ Consent Mode v2 signals sent before GA4 fires
 
 
 ## 🌍 Translation & Localization
@@ -525,8 +545,18 @@ EasyLyticsAPI.rebindEvents();
 
 ## 📅 Changelog
 
-### Version 1.4.0 (Current)
-- ✨ **Refactored to modular architecture** - Separated into logical class components
+### Version 1.5.1
+- 🐛 Fixed GA4 not loading on page load when consent was already stored (early return guard conflict with server-side dataLayer initialization)
+
+### Version 1.5.0
+- ✨ **Google Tag Manager support** — added GTM Container ID field in General Settings
+- ✨ **Consent Mode v2** — all four required signals (`ad_storage`, `analytics_storage`, `ad_user_data`, `ad_personalization`) set server-side in `<head>` before any tags fire
+- ✨ GTM snippet injected via `wp_head` at priority 1 for correct load order
+- ✨ Consent signals automatically updated to `granted`/`denied` based on analytical cookie choice
+- ✨ Works with GA4-only, GTM-only, or both simultaneously
+- ⚡ Backward compatible — existing GA4-only installations unaffected
+
+### Version 1.4.0 - Separated into logical class components
 - ✨ Added YouTube video blocking feature
 - ✨ Added customizable YouTube blocking messages
 - ✨ Added bot detection for SEO optimization
