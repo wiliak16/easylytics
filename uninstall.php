@@ -28,6 +28,7 @@ $easylytics_options = array(
     
     // Basic Settings
     'eslt_ga4_id',                        // Google Analytics 4 ID
+    'eslt_gtm_id',                        // Google Tag Manager Container ID
     'eslt_popup_position',                // Popup position (bottom-right, bottom-left, bottom-center)
     'eslt_disable_youtube_cookies',       // YouTube blocking enabled/disabled
     'eslt_cookies_info_url',              // Cookie information URL

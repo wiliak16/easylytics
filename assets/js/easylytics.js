@@ -1,6 +1,6 @@
 /**
  * EasyLytics Cookie Consent JavaScript
- * Version: 1.5.1
+ * Version: 1.5.2
  * Updated with close button functionality, toggle settings, enhanced GA4 loading,
  * proper admin setting retrieval for hide button text, and cleaned debug logs
  */
@@ -127,6 +127,7 @@
             
             // Update Consent Mode v2 signals
             this.setConsentMode(true);
+            this.pushConsentUpdatedEvent(true);
 
             // Load GA4 immediately
             this.loadGA4();
@@ -170,6 +171,7 @@
             
             // Update Consent Mode v2 signals - denied
             this.setConsentMode(false);
+            this.pushConsentUpdatedEvent(false);
             
             // Do NOT load GA4 since analytical cookies were rejected
             
@@ -291,6 +293,7 @@
             
             // Update Consent Mode v2 signals
             this.setConsentMode(analyticalConsent);
+            this.pushConsentUpdatedEvent(analyticalConsent);
 
             if (analyticalConsent) {
                 this.loadGA4();
@@ -505,7 +508,6 @@
          */
         loadGA4: function() {
             if (typeof easyLyticsAjax === 'undefined' || !easyLyticsAjax.ga4_id) {
-                console.error('EasyLytics: GA4 ID not configured or easyLyticsAjax not available');
                 return false;
             }
             
@@ -581,6 +583,21 @@
                 'analytics_storage': state,
                 'ad_user_data': state,
                 'ad_personalization': state
+            });
+        },
+
+        /**
+         * Push consent_updated event to dataLayer for GTM triggers
+         */
+        pushConsentUpdatedEvent: function(granted) {
+            const state = granted ? 'granted' : 'denied';
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'consent_updated',
+                ad_storage: state,
+                analytics_storage: state,
+                ad_user_data: state,
+                ad_personalization: state
             });
         },
 
